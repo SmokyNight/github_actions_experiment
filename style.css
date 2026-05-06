@@ -1,0 +1,17 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 24px;
+  background-color: #f5f7fb;
+}
+
+h1 {
+  color: #1f2a44;
+}
+
+.cat-image {
+  display: block;
+  width: min(420px, 100%);
+  margin-top: 16px;
+  border-radius: 12px;
+}
