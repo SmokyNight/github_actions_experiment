@@ -33,15 +33,14 @@ jobs:
           aws s3 sync . s3://stargolem.lv --delete \
             --exclude ".git/*" \
             --exclude ".github/*"
-    
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id E3G0B20PZCXPNCC \
-            --paths "/*"
             
       - name: List CloudFront distributions
         run: |
           aws cloudfront list-distributions \
             --query "DistributionList.Items[*].[Id,DomainName]" \
             --output table
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E3G0B20PZCXPNC \
+            --paths "/*"
