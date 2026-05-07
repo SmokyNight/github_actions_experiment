@@ -9,6 +9,19 @@ h1 {
   color: #1f2a44;
 }
 
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #ffffff;
+  background-color: #3457d5;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2947b2;
+}
+
 .cat-image {
   display: block;
   width: min(420px, 100%);

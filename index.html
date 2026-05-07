@@ -6,10 +6,20 @@
   </head>
   <body>
     <h1>I am space golem! And I like pie!</h1>
+    <button id="new-cat-button" type="button">Show another cat</button>
     <img
       src="https://cataas.com/cat"
       alt="A cute cat"
+      id="cat-image"
       class="cat-image"
     />
+    <script>
+      const catImage = document.getElementById("cat-image");
+      const newCatButton = document.getElementById("new-cat-button");
+
+      newCatButton.addEventListener("click", () => {
+        catImage.src = `https://cataas.com/cat?${Date.now()}`;
+      });
+    </script>
   </body>
 </html>
