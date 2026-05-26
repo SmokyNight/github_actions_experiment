@@ -58,6 +58,7 @@ button:hover {
   display: block;
   width: min(420px, 100%);
   margin-top: 16px;
+  margin-bottom: 32px;
   border-radius: 12px;
 }
 
