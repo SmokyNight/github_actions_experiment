@@ -6,21 +6,90 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
-    <h1>I am space golem! And I like pie!</h1>
-    <img
-      src="https://cataas.com/cat"
-      alt="A cute cat"
-      id="cat-image"
-      class="cat-image"
-    />
-    <button id="new-cat-button" type="button">Show another cat</button>
+    <nav class="page-nav" aria-label="Pages">
+      <button
+        type="button"
+        class="nav-button active"
+        data-page="cats"
+        aria-pressed="true"
+      >
+        Cats
+      </button>
+      <button
+        type="button"
+        class="nav-button"
+        data-page="chuck"
+        aria-pressed="false"
+      >
+        Chuck Norris
+      </button>
+    </nav>
+
+    <section id="cats-page" class="page active">
+      <h1>I am space golem! And I like pie!</h1>
+      <img
+        src="https://cataas.com/cat"
+        alt="A cute cat"
+        id="cat-image"
+        class="cat-image"
+      />
+      <button id="new-cat-button" type="button">Show another cat</button>
+    </section>
+
+    <section id="chuck-page" class="page" hidden>
+      <h1>Chuck Norris quote</h1>
+      <blockquote id="chuck-quote" class="chuck-quote">Loading…</blockquote>
+      <button id="refresh-chuck-button" type="button">Another quote</button>
+    </section>
+
     <script>
+      const navButtons = document.querySelectorAll(".nav-button");
+      const pages = document.querySelectorAll(".page");
+
+      navButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const pageName = button.dataset.page;
+
+          navButtons.forEach((navButton) => {
+            const isActive = navButton === button;
+            navButton.classList.toggle("active", isActive);
+            navButton.setAttribute("aria-pressed", String(isActive));
+          });
+
+          pages.forEach((page) => {
+            const isActive = page.id === `${pageName}-page`;
+            page.classList.toggle("active", isActive);
+            page.hidden = !isActive;
+          });
+        });
+      });
+
       const catImage = document.getElementById("cat-image");
       const newCatButton = document.getElementById("new-cat-button");
 
       newCatButton.addEventListener("click", () => {
         catImage.src = `https://cataas.com/cat?${Date.now()}`;
       });
+
+      const chuckQuote = document.getElementById("chuck-quote");
+      const refreshChuckButton = document.getElementById("refresh-chuck-button");
+
+      async function loadChuckQuote() {
+        chuckQuote.textContent = "Loading…";
+
+        try {
+          const response = await fetch("https://api.chucknorris.io/jokes/random");
+          if (!response.ok) throw new Error();
+
+          const data = await response.json();
+          chuckQuote.textContent = `"${data.value}"`;
+        } catch {
+          chuckQuote.textContent = "Could not load a quote.";
+        }
+      }
+
+      refreshChuckButton.addEventListener("click", loadChuckQuote);
+      loadChuckQuote();
     </script>
   </body>
 </html>

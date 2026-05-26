@@ -9,6 +9,26 @@ h1 {
   color: #1f2a44;
 }
 
+.page-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.nav-button {
+  border: 2px solid #3457d5;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #3457d5;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.nav-button.active {
+  color: #ffffff;
+  background-color: #3457d5;
+}
+
 button {
   border: none;
   border-radius: 8px;
@@ -22,9 +42,33 @@ button:hover {
   background-color: #2947b2;
 }
 
+.nav-button:hover {
+  background-color: #e8edff;
+}
+
+.nav-button.active:hover {
+  background-color: #2947b2;
+}
+
+.page {
+  max-width: 640px;
+}
+
 .cat-image {
   display: block;
   width: min(420px, 100%);
   margin-top: 16px;
   border-radius: 12px;
 }
+
+.chuck-quote {
+  margin: 16px 0;
+  padding: 16px 20px;
+  border-left: 4px solid #3457d5;
+  border-radius: 0 12px 12px 0;
+  background-color: #ffffff;
+  color: #1f2a44;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
