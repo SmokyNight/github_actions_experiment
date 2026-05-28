@@ -145,6 +145,17 @@
       const chuckQuote = document.getElementById("chuck-quote");
       const refreshChuckButton = document.getElementById("refresh-chuck-button");
 
+      function toAsciiText(value) {
+        return String(value)
+          .normalize("NFKD")
+          .replace(/[\u2018\u2019\u201A\u201B]/g, "'")
+          .replace(/[\u201C\u201D\u201E\u201F]/g, '"')
+          .replace(/[\u2013\u2014]/g, "-")
+          .replace(/\u2026/g, "...")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^\x20-\x7E]/g, "");
+      }
+
       async function loadChuckQuote() {
         chuckQuote.textContent = "Loading...";
 
@@ -153,7 +164,7 @@
           if (!response.ok) throw new Error();
 
           const data = await response.json();
-          chuckQuote.textContent = `"${data.value}"`;
+          chuckQuote.textContent = `"${toAsciiText(data.value)}"`;
         } catch {
           chuckQuote.textContent = "Could not load a quote.";
         }
