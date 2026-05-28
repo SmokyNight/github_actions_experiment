@@ -73,14 +73,14 @@
 
     <section id="chuck-page" class="page" hidden>
       <h1>Chuck Norris quote</h1>
-      <blockquote id="chuck-quote" class="chuck-quote">Loading…</blockquote>
+      <blockquote id="chuck-quote" class="chuck-quote">Loading...</blockquote>
       <button id="refresh-chuck-button" type="button">Another quote</button>
     </section>
 
     <section id="weather-page" class="page" hidden>
       <h1>Weather in Riga</h1>
       <div id="weather-card" class="weather-card" aria-live="polite">
-        Loading weather…
+        Loading weather...
       </div>
       <button id="refresh-weather-button" type="button">Refresh weather</button>
     </section>
@@ -118,7 +118,7 @@
       const newDogButton = document.getElementById("new-dog-button");
 
       async function loadDogImage() {
-        newDogButton.textContent = "Loading dog…";
+        newDogButton.textContent = "Loading dog...";
         newDogButton.disabled = true;
 
         try {
@@ -146,7 +146,7 @@
       const refreshChuckButton = document.getElementById("refresh-chuck-button");
 
       async function loadChuckQuote() {
-        chuckQuote.textContent = "Loading…";
+        chuckQuote.textContent = "Loading...";
 
         try {
           const response = await fetch("https://api.chucknorris.io/jokes/random");
@@ -248,7 +248,7 @@
       }
 
       async function loadRigaWeather() {
-        weatherCard.textContent = "Loading weather…";
+        weatherCard.textContent = "Loading weather...";
         refreshWeatherButton.disabled = true;
 
         try {
