@@ -159,6 +159,11 @@ button:hover {
   text-align: left;
 }
 
+.quiz-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
 .quiz-option.selected {
   outline: 3px solid #ffcf33;
   outline-offset: 2px;
