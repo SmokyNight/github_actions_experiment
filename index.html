@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Hello</title>
-    <link rel="stylesheet" href="style.css?v=3" />
+    <link rel="stylesheet" href="style.css?v=4" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -30,6 +30,14 @@
         aria-pressed="false"
       >
         Chuck Norris
+      </button>
+      <button
+        type="button"
+        class="nav-button"
+        data-page="weather"
+        aria-pressed="false"
+      >
+        Weather
       </button>
     </nav>
 
@@ -67,6 +75,14 @@
       <h1>Chuck Norris quote</h1>
       <blockquote id="chuck-quote" class="chuck-quote">Loading…</blockquote>
       <button id="refresh-chuck-button" type="button">Another quote</button>
+    </section>
+
+    <section id="weather-page" class="page" hidden>
+      <h1>Weather in Riga</h1>
+      <div id="weather-card" class="weather-card" aria-live="polite">
+        Loading weather…
+      </div>
+      <button id="refresh-weather-button" type="button">Refresh weather</button>
     </section>
 
     <script>
@@ -145,6 +161,113 @@
 
       refreshChuckButton.addEventListener("click", loadChuckQuote);
       loadChuckQuote();
+
+      const weatherCard = document.getElementById("weather-card");
+      const refreshWeatherButton = document.getElementById("refresh-weather-button");
+      const rigaWeatherUrl =
+        "https://api.open-meteo.com/v1/forecast?latitude=56.9496&longitude=24.1052&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Europe%2FRiga";
+      const weatherDescriptions = {
+        0: "Clear sky",
+        1: "Mainly clear",
+        2: "Partly cloudy",
+        3: "Overcast",
+        45: "Fog",
+        48: "Depositing rime fog",
+        51: "Light drizzle",
+        53: "Moderate drizzle",
+        55: "Dense drizzle",
+        61: "Slight rain",
+        63: "Moderate rain",
+        65: "Heavy rain",
+        71: "Slight snow",
+        73: "Moderate snow",
+        75: "Heavy snow",
+        80: "Slight rain showers",
+        81: "Moderate rain showers",
+        82: "Violent rain showers",
+        95: "Thunderstorm",
+        96: "Thunderstorm with slight hail",
+        99: "Thunderstorm with heavy hail",
+      };
+
+      function formatWeatherValue(value, unit = "") {
+        return `${value} ${unit}`.trim();
+      }
+
+      function getWeatherDescription(code) {
+        return weatherDescriptions[code] || `Weather code ${code}`;
+      }
+
+      function createWeatherDetail(label, value) {
+        const item = document.createElement("div");
+        item.className = "weather-detail";
+
+        const term = document.createElement("dt");
+        term.textContent = label;
+
+        const description = document.createElement("dd");
+        description.textContent = value;
+
+        item.append(term, description);
+        return item;
+      }
+
+      function renderRigaWeather(current, units) {
+        const summary = document.createElement("p");
+        summary.className = "weather-summary";
+        summary.textContent = getWeatherDescription(current.weather_code);
+
+        const details = document.createElement("dl");
+        details.className = "weather-details";
+        details.append(
+          createWeatherDetail(
+            "Temperature",
+            formatWeatherValue(current.temperature_2m, units.temperature_2m),
+          ),
+          createWeatherDetail(
+            "Feels like",
+            formatWeatherValue(
+              current.apparent_temperature,
+              units.apparent_temperature,
+            ),
+          ),
+          createWeatherDetail(
+            "Humidity",
+            formatWeatherValue(
+              current.relative_humidity_2m,
+              units.relative_humidity_2m,
+            ),
+          ),
+          createWeatherDetail(
+            "Wind",
+            formatWeatherValue(current.wind_speed_10m, units.wind_speed_10m),
+          ),
+        );
+
+        weatherCard.replaceChildren(summary, details);
+      }
+
+      async function loadRigaWeather() {
+        weatherCard.textContent = "Loading weather…";
+        refreshWeatherButton.disabled = true;
+
+        try {
+          const response = await fetch(rigaWeatherUrl);
+          if (!response.ok) throw new Error();
+
+          const data = await response.json();
+          if (!data.current) throw new Error();
+
+          renderRigaWeather(data.current, data.current_units || {});
+        } catch {
+          weatherCard.textContent = "Could not load Riga weather.";
+        } finally {
+          refreshWeatherButton.disabled = false;
+        }
+      }
+
+      refreshWeatherButton.addEventListener("click", loadRigaWeather);
+      loadRigaWeather();
     </script>
   </body>
 </html>
