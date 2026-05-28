@@ -11,6 +11,7 @@ h1 {
 
 .page-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 24px;
 }
@@ -118,4 +119,61 @@ button:hover {
 
 .weather-detail dd {
   margin: 4px 0 0;
+}
+
+.quiz-card {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(420px, 100%);
+  margin-top: 16px;
+  padding: 16px;
+  border-left: 4px solid #3457d5;
+  border-radius: 0 12px 12px 0;
+  background-color: #ffffff;
+  color: #1f2a44;
+}
+
+.quiz-painting {
+  display: block;
+  width: 100%;
+  max-height: 58vh;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: #edf1ff;
+}
+
+.quiz-question {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.quiz-option {
+  text-align: left;
+}
+
+.quiz-option.selected {
+  outline: 3px solid #ffcf33;
+  outline-offset: 2px;
+}
+
+.quiz-result {
+  min-height: 1.5em;
+  margin: 0;
+  font-weight: 700;
+}
+
+.quiz-result.success {
+  color: #157347;
+}
+
+.quiz-result.error {
+  color: #b02a37;
 }
