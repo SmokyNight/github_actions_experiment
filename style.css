@@ -70,6 +70,10 @@ button:hover {
   border-radius: 12px;
 }
 
+.pet-actions {
+  display: block;
+}
+
 .chuck-quote {
   margin: 16px 0;
   padding: 16px 20px;
