@@ -54,7 +54,7 @@ button:hover {
   max-width: 640px;
 }
 
-.cat-image {
+.pet-image {
   display: block;
   width: min(420px, 100%);
   margin-top: 16px;
