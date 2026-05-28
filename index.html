@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Hello</title>
-    <link rel="stylesheet" href="style.css?v=4" />
+    <link rel="stylesheet" href="style.css?v=5" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -38,6 +38,14 @@
         aria-pressed="false"
       >
         Weather
+      </button>
+      <button
+        type="button"
+        class="nav-button"
+        data-page="quiz"
+        aria-pressed="false"
+      >
+        Mini Quiz
       </button>
     </nav>
 
@@ -83,6 +91,33 @@
         Loading weather...
       </div>
       <button id="refresh-weather-button" type="button">Refresh weather</button>
+    </section>
+
+    <section id="quiz-page" class="page" hidden>
+      <h1>Famous painting mini-quiz</h1>
+      <div class="quiz-card">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Mona_Lisa.jpg"
+          alt="A famous portrait painting"
+          class="quiz-painting"
+        />
+        <p class="quiz-question">Which famous painting is shown here?</p>
+        <div class="quiz-options" aria-label="Painting answer options">
+          <button type="button" class="quiz-option" data-correct="false">
+            The Starry Night
+          </button>
+          <button type="button" class="quiz-option" data-correct="true">
+            Mona Lisa
+          </button>
+          <button type="button" class="quiz-option" data-correct="false">
+            Girl with a Pearl Earring
+          </button>
+          <button type="button" class="quiz-option" data-correct="false">
+            The Scream
+          </button>
+        </div>
+        <p id="quiz-result" class="quiz-result" aria-live="polite"></p>
+      </div>
     </section>
 
     <script>
@@ -279,6 +314,24 @@
 
       refreshWeatherButton.addEventListener("click", loadRigaWeather);
       loadRigaWeather();
+
+      const quizOptions = document.querySelectorAll(".quiz-option");
+      const quizResult = document.getElementById("quiz-result");
+
+      quizOptions.forEach((option) => {
+        option.addEventListener("click", () => {
+          const isCorrect = option.dataset.correct === "true";
+
+          quizOptions.forEach((quizOption) => {
+            quizOption.classList.toggle("selected", quizOption === option);
+          });
+
+          quizResult.className = `quiz-result ${isCorrect ? "success" : "error"}`;
+          quizResult.textContent = isCorrect
+            ? "Congratulations, customer! You selected correctly."
+            : "Not quite. Try another option.";
+        });
+      });
     </script>
   </body>
 </html>
