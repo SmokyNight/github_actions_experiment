@@ -143,6 +143,10 @@ button:hover {
   background-color: #edf1ff;
 }
 
+.quiz-painting.is-loading {
+  opacity: 0;
+}
+
 .quiz-question {
   margin: 0;
   font-size: 1.1rem;

@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Hello</title>
-    <link rel="stylesheet" href="style.css?v=5" />
+    <link rel="stylesheet" href="style.css?v=6" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -343,7 +343,7 @@
         {
           title: "The Great Wave off Kanagawa",
           image:
-            "https://upload.wikimedia.org/wikipedia/commons/0/0a/The_Great_Wave_off_Kanagawa.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/The_Great_Wave_off_Kanagawa.jpg/800px-The_Great_Wave_off_Kanagawa.jpg",
         },
         {
           title: "American Gothic",
@@ -353,6 +353,7 @@
       ];
       let currentQuizPainting = null;
       let quizRerollTimer = null;
+      let quizQuestionId = 0;
 
       function getRandomItem(items) {
         return items[Math.floor(Math.random() * items.length)];
@@ -384,13 +385,43 @@
         return nextPainting;
       }
 
-      function setQuizPaintingImage(url) {
-        const separator = url.includes("?") ? "&" : "?";
-        quizPainting.src = `${url}${separator}cb=${Date.now()}`;
+      function setQuizOptionsEnabled(enabled) {
+        quizOptions.forEach((option) => {
+          option.disabled = !enabled;
+        });
+      }
+
+      function loadQuizPaintingImage(painting, questionId) {
+        const separator = painting.image.includes("?") ? "&" : "?";
+        const imageUrl = `${painting.image}${separator}q=${questionId}`;
+
+        quizPainting.classList.add("is-loading");
+        quizPainting.alt = "Loading painting...";
+        setQuizOptionsEnabled(false);
+
+        quizPainting.onload = () => {
+          if (questionId !== quizQuestionId) return;
+
+          quizPainting.classList.remove("is-loading");
+          quizPainting.alt = `Painting: ${painting.title}`;
+          setQuizOptionsEnabled(true);
+        };
+
+        quizPainting.onerror = () => {
+          if (questionId !== quizQuestionId) return;
+
+          quizPainting.classList.remove("is-loading");
+          quizPainting.alt = "Could not load painting";
+          setQuizOptionsEnabled(true);
+        };
+
+        quizPainting.src = imageUrl;
       }
 
       function renderQuizQuestion() {
         clearTimeout(quizRerollTimer);
+        quizQuestionId += 1;
+        const questionId = quizQuestionId;
 
         const nextPainting = getNextQuizPainting();
         const distractors = shuffleItems(
@@ -399,7 +430,6 @@
         const answers = shuffleItems([nextPainting, ...distractors]);
 
         currentQuizPainting = nextPainting;
-        setQuizPaintingImage(nextPainting.image);
 
         quizOptions.forEach((option, index) => {
           const answer = answers[index];
@@ -407,11 +437,12 @@
           option.textContent = answer.title;
           option.dataset.correct = String(answer === nextPainting);
           option.classList.remove("selected");
-          option.disabled = false;
         });
 
         quizResult.className = "quiz-result";
         quizResult.textContent = "";
+
+        loadQuizPaintingImage(nextPainting, questionId);
       }
 
       quizOptions.forEach((option) => {
