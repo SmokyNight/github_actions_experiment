@@ -384,6 +384,11 @@
         return nextPainting;
       }
 
+      function setQuizPaintingImage(url) {
+        const separator = url.includes("?") ? "&" : "?";
+        quizPainting.src = `${url}${separator}cb=${Date.now()}`;
+      }
+
       function renderQuizQuestion() {
         clearTimeout(quizRerollTimer);
 
@@ -394,7 +399,7 @@
         const answers = shuffleItems([nextPainting, ...distractors]);
 
         currentQuizPainting = nextPainting;
-        quizPainting.src = nextPainting.image;
+        setQuizPaintingImage(nextPainting.image);
 
         quizOptions.forEach((option, index) => {
           const answer = answers[index];
