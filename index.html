@@ -343,7 +343,7 @@
         {
           title: "The Great Wave off Kanagawa",
           image:
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/The_Great_Wave_off_Kanagawa.jpg/800px-The_Great_Wave_off_Kanagawa.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/0/0a/The_Great_Wave_off_Kanagawa.jpg",
         },
         {
           title: "American Gothic",
@@ -392,9 +392,6 @@
       }
 
       function loadQuizPaintingImage(painting, questionId) {
-        const separator = painting.image.includes("?") ? "&" : "?";
-        const imageUrl = `${painting.image}${separator}q=${questionId}`;
-
         quizPainting.classList.add("is-loading");
         quizPainting.alt = "Loading painting...";
         setQuizOptionsEnabled(false);
@@ -415,7 +412,11 @@
           setQuizOptionsEnabled(true);
         };
 
-        quizPainting.src = imageUrl;
+        // Do not append ?q= — Wikimedia returns 400 for unknown query params on many URLs.
+        if (quizPainting.getAttribute("src")) {
+          quizPainting.removeAttribute("src");
+        }
+        quizPainting.src = painting.image;
       }
 
       function renderQuizQuestion() {
