@@ -5,7 +5,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <link rel="stylesheet" href="style.css?v=7" />
+    <link rel="stylesheet" href="style.css?v=8" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -105,6 +105,9 @@
           class="quiz-painting is-loading"
         />
         <p class="quiz-question">Which famous painting is shown here?</p>
+        <p id="quiz-streak" class="quiz-streak" aria-live="polite">
+          Correct answers in a row: 0
+        </p>
         <div class="quiz-options" aria-label="Painting answer options">
           <button type="button" class="quiz-option"></button>
           <button type="button" class="quiz-option"></button>
@@ -311,7 +314,7 @@
       loadRigaWeather();
     </script>
     <script src="quiz-paintings.js?v=2"></script>
-    <script src="quiz.js?v=1"></script>
+    <script src="quiz.js?v=2"></script>
     <script>
       initPaintingQuiz();
     </script>
