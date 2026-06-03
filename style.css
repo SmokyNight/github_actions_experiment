@@ -153,6 +153,12 @@ button:hover {
   font-weight: 700;
 }
 
+.quiz-streak {
+  margin: -6px 0 0;
+  color: #3457d5;
+  font-weight: 700;
+}
+
 .quiz-options {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

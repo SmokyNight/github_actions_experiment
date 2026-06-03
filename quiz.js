@@ -1,15 +1,17 @@
 function initPaintingQuiz() {
   const quizPainting = document.getElementById("quiz-painting");
   const quizOptions = Array.from(document.querySelectorAll(".quiz-option"));
+  const quizStreak = document.getElementById("quiz-streak");
   const quizResult = document.getElementById("quiz-result");
 
-  if (!quizPainting || !quizOptions.length || !quizResult) {
+  if (!quizPainting || !quizOptions.length || !quizStreak || !quizResult) {
     return;
   }
 
   let currentQuizPainting = null;
   let quizRerollTimer = null;
   let quizQuestionId = 0;
+  let correctAnswersInRow = 0;
 
   function getRandomItem(items) {
     return items[Math.floor(Math.random() * items.length)];
@@ -45,6 +47,10 @@ function initPaintingQuiz() {
     quizOptions.forEach((option) => {
       option.disabled = !enabled;
     });
+  }
+
+  function updateQuizStreak() {
+    quizStreak.textContent = `Correct answers in a row: ${correctAnswersInRow}`;
   }
 
   function loadQuizPaintingImage(painting, questionId) {
@@ -120,9 +126,17 @@ function initPaintingQuiz() {
         quizOption.classList.toggle("selected", quizOption === option);
       });
 
+      if (isCorrect) {
+        correctAnswersInRow += 1;
+      } else {
+        correctAnswersInRow = 0;
+      }
+
+      updateQuizStreak();
+
       quizResult.className = `quiz-result ${isCorrect ? "success" : "error"}`;
       quizResult.textContent = isCorrect
-        ? "Congratulations, customer! You selected correctly."
+        ? `Congratulations, customer! Correct answers in a row: ${correctAnswersInRow}.`
         : "Not quite. Try another option.";
 
       if (isCorrect) {
@@ -135,5 +149,6 @@ function initPaintingQuiz() {
     });
   });
 
+  updateQuizStreak();
   renderQuizQuestion();
 }
