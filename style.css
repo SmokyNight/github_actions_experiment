@@ -192,3 +192,68 @@ button:hover {
 .quiz-result.error {
   color: #b02a37;
 }
+
+.calculator-card {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(320px, 100%);
+  margin-top: 16px;
+  padding: 16px;
+  border-left: 4px solid #3457d5;
+  border-radius: 0 12px 12px 0;
+  background-color: #ffffff;
+  color: #1f2a44;
+}
+
+.calculator-display {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #edf1ff;
+  color: #1f2a44;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: right;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calculator-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.calculator-key {
+  min-height: 52px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.calculator-key-clear {
+  background-color: #b02a37;
+}
+
+.calculator-key-clear:hover {
+  background-color: #922932;
+}
+
+.calculator-key-operator {
+  background-color: #5a6fd6;
+}
+
+.calculator-key-operator:hover {
+  background-color: #4a5fc0;
+}
+
+.calculator-key-equals {
+  grid-row: span 2;
+}
+
+.calculator-key-zero {
+  grid-column: span 2;
+}

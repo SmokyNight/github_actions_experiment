@@ -5,7 +5,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <link rel="stylesheet" href="style.css?v=8" />
+    <link rel="stylesheet" href="style.css?v=9" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -49,6 +49,14 @@
         aria-pressed="false"
       >
         Mini Quiz
+      </button>
+      <button
+        type="button"
+        class="nav-button"
+        data-page="calculator"
+        aria-pressed="false"
+      >
+        Calculator
       </button>
     </nav>
 
@@ -94,6 +102,39 @@
         Loading weather...
       </div>
       <button id="refresh-weather-button" type="button">Refresh weather</button>
+    </section>
+
+    <section id="calculator-page" class="page" hidden>
+      <h1>Calculator</h1>
+      <div class="calculator-card">
+        <output
+          id="calculator-display"
+          class="calculator-display"
+          aria-live="polite"
+          aria-label="Calculator display"
+        >
+          0
+        </output>
+        <div class="calculator-keys" aria-label="Calculator keys">
+          <button type="button" class="calculator-key calculator-key-clear" data-action="clear">C</button>
+          <button type="button" class="calculator-key calculator-key-operator" data-action="operator" data-value="/">÷</button>
+          <button type="button" class="calculator-key calculator-key-operator" data-action="operator" data-value="*">×</button>
+          <button type="button" class="calculator-key calculator-key-operator" data-action="operator" data-value="-">−</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="7">7</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="8">8</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="9">9</button>
+          <button type="button" class="calculator-key calculator-key-operator" data-action="operator" data-value="+">+</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="4">4</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="5">5</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="6">6</button>
+          <button type="button" class="calculator-key calculator-key-equals" data-action="equals">=</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="1">1</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="2">2</button>
+          <button type="button" class="calculator-key" data-action="digit" data-value="3">3</button>
+          <button type="button" class="calculator-key calculator-key-zero" data-action="digit" data-value="0">0</button>
+          <button type="button" class="calculator-key" data-action="decimal">.</button>
+        </div>
+      </div>
     </section>
 
     <section id="quiz-page" class="page" hidden>
@@ -312,6 +353,124 @@
 
       refreshWeatherButton.addEventListener("click", loadRigaWeather);
       loadRigaWeather();
+
+      const calculatorDisplay = document.getElementById("calculator-display");
+      const calculatorKeys = document.querySelector(".calculator-keys");
+
+      let calculatorValue = "0";
+      let calculatorStoredValue = null;
+      let calculatorOperator = null;
+      let calculatorWaitingForOperand = false;
+
+      function updateCalculatorDisplay() {
+        calculatorDisplay.textContent = calculatorValue;
+      }
+
+      function resetCalculator() {
+        calculatorValue = "0";
+        calculatorStoredValue = null;
+        calculatorOperator = null;
+        calculatorWaitingForOperand = false;
+        updateCalculatorDisplay();
+      }
+
+      function inputCalculatorDigit(digit) {
+        if (calculatorWaitingForOperand) {
+          calculatorValue = digit;
+          calculatorWaitingForOperand = false;
+        } else {
+          calculatorValue = calculatorValue === "0" ? digit : calculatorValue + digit;
+        }
+        updateCalculatorDisplay();
+      }
+
+      function inputCalculatorDecimal() {
+        if (calculatorWaitingForOperand) {
+          calculatorValue = "0.";
+          calculatorWaitingForOperand = false;
+        } else if (!calculatorValue.includes(".")) {
+          calculatorValue += ".";
+        }
+        updateCalculatorDisplay();
+      }
+
+      function calculateCalculatorResult(firstValue, secondValue, operator) {
+        const first = parseFloat(firstValue);
+        const second = parseFloat(secondValue);
+
+        switch (operator) {
+          case "+":
+            return first + second;
+          case "-":
+            return first - second;
+          case "*":
+            return first * second;
+          case "/":
+            return second === 0 ? "Error" : first / second;
+          default:
+            return second;
+        }
+      }
+
+      function formatCalculatorResult(value) {
+        if (value === "Error") return value;
+        const rounded = Math.round((value + Number.EPSILON) * 1e10) / 1e10;
+        return String(rounded);
+      }
+
+      function handleCalculatorOperator(nextOperator) {
+        const inputValue = parseFloat(calculatorValue);
+
+        if (calculatorStoredValue === null) {
+          calculatorStoredValue = inputValue;
+        } else if (calculatorOperator && !calculatorWaitingForOperand) {
+          const result = calculateCalculatorResult(
+            calculatorStoredValue,
+            inputValue,
+            calculatorOperator,
+          );
+          calculatorValue = formatCalculatorResult(result);
+          calculatorStoredValue = result === "Error" ? null : parseFloat(calculatorValue);
+          updateCalculatorDisplay();
+        }
+
+        calculatorWaitingForOperand = true;
+        calculatorOperator = nextOperator;
+      }
+
+      function handleCalculatorEquals() {
+        if (calculatorOperator === null || calculatorWaitingForOperand) return;
+
+        const result = calculateCalculatorResult(
+          calculatorStoredValue,
+          calculatorValue,
+          calculatorOperator,
+        );
+        calculatorValue = formatCalculatorResult(result);
+        calculatorStoredValue = null;
+        calculatorOperator = null;
+        calculatorWaitingForOperand = true;
+        updateCalculatorDisplay();
+      }
+
+      calculatorKeys.addEventListener("click", (event) => {
+        const key = event.target.closest(".calculator-key");
+        if (!key) return;
+
+        const action = key.dataset.action;
+
+        if (action === "clear") {
+          resetCalculator();
+        } else if (action === "digit") {
+          inputCalculatorDigit(key.dataset.value);
+        } else if (action === "decimal") {
+          inputCalculatorDecimal();
+        } else if (action === "operator") {
+          handleCalculatorOperator(key.dataset.value);
+        } else if (action === "equals") {
+          handleCalculatorEquals();
+        }
+      });
     </script>
     <script src="quiz-paintings.js?v=2"></script>
     <script src="quiz.js?v=2"></script>
