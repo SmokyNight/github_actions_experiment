@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <link rel="stylesheet" href="style.css?v=9" />
+    <link rel="stylesheet" href="style.css?v=10" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -149,21 +149,51 @@
     <section id="flags-quiz-page" class="page" hidden>
       <h1>Country flags mini-quiz</h1>
       <div class="quiz-card">
+        <label class="flags-quiz-mode-toggle">
+          <input
+            type="checkbox"
+            id="flags-quiz-type-mode"
+            aria-controls="flags-quiz-options flags-quiz-type-form"
+          />
+          Type country name (press Enter)
+        </label>
         <img
           alt="Country flag quiz"
           id="quiz-flag"
           class="quiz-painting is-loading"
         />
-        <p class="quiz-question">Which country does this flag belong to?</p>
+        <p id="flags-quiz-question" class="quiz-question">
+          Which country does this flag belong to?
+        </p>
         <p id="flags-quiz-streak" class="quiz-streak" aria-live="polite">
           Correct answers in a row: 0
         </p>
-        <div class="quiz-options" aria-label="Country answer options">
+        <div
+          id="flags-quiz-options"
+          class="quiz-options"
+          aria-label="Country answer options"
+        >
           <button type="button" class="quiz-option"></button>
           <button type="button" class="quiz-option"></button>
           <button type="button" class="quiz-option"></button>
           <button type="button" class="quiz-option"></button>
         </div>
+        <form
+          id="flags-quiz-type-form"
+          class="flags-quiz-type-form"
+          hidden
+          aria-label="Type country name answer"
+        >
+          <input
+            type="text"
+            id="flags-quiz-answer"
+            class="flags-quiz-answer"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Enter country name"
+            aria-label="Country name"
+          />
+        </form>
         <p id="flags-quiz-result" class="quiz-result" aria-live="polite"></p>
       </div>
     </section>
@@ -506,7 +536,7 @@
     <script src="quiz-paintings.js?v=2"></script>
     <script src="quiz.js?v=3"></script>
     <script src="quiz-flags.js?v=1"></script>
-    <script src="flags-quiz.js?v=1"></script>
+    <script src="flags-quiz.js?v=2"></script>
     <script>
       initPaintingQuiz();
       initFlagsQuiz();
