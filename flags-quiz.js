@@ -1,6 +1,8 @@
 function initFlagsQuiz() {
   const flagsPage = document.getElementById("flags-quiz-page");
+  const quizCard = document.getElementById("flags-quiz-card");
   const quizFlag = document.getElementById("quiz-flag");
+  const choicePanel = document.getElementById("flags-quiz-choice-panel");
   const quizOptionsContainer = document.getElementById("flags-quiz-options");
   const quizOptions = quizOptionsContainer
     ? Array.from(quizOptionsContainer.querySelectorAll(".quiz-option"))
@@ -9,18 +11,20 @@ function initFlagsQuiz() {
   const quizResult = document.getElementById("flags-quiz-result");
   const quizQuestion = document.getElementById("flags-quiz-question");
   const typeModeToggle = document.getElementById("flags-quiz-type-mode");
-  const typeForm = document.getElementById("flags-quiz-type-form");
+  const typePanel = document.getElementById("flags-quiz-type-panel");
   const typeAnswerInput = document.getElementById("flags-quiz-answer");
 
   if (
     !flagsPage ||
+    !quizCard ||
     !quizFlag ||
+    !choicePanel ||
     !quizOptions.length ||
     !quizStreak ||
     !quizResult ||
     !quizQuestion ||
     !typeModeToggle ||
-    !typeForm ||
+    !typePanel ||
     !typeAnswerInput
   ) {
     return;
@@ -97,9 +101,11 @@ function initFlagsQuiz() {
   function updateQuizModeUi() {
     const typeMode = isTypeMode();
 
+    quizMode = typeMode ? "type" : "choice";
+    quizCard.dataset.mode = quizMode;
     typeModeToggle.checked = typeMode;
-    quizOptionsContainer.hidden = typeMode;
-    typeForm.hidden = !typeMode;
+    choicePanel.setAttribute("aria-hidden", String(typeMode));
+    typePanel.setAttribute("aria-hidden", String(!typeMode));
     quizQuestion.textContent = typeMode
       ? "Type the country name and press Enter."
       : "Which country does this flag belong to?";
@@ -109,7 +115,18 @@ function initFlagsQuiz() {
     typeAnswerInput.value = "";
     quizOptions.forEach((option) => {
       option.classList.remove("selected");
+      if (typeMode) {
+        option.tabIndex = -1;
+      } else {
+        option.removeAttribute("tabindex");
+      }
     });
+
+    if (typeMode) {
+      typeAnswerInput.removeAttribute("tabindex");
+    } else {
+      typeAnswerInput.tabIndex = -1;
+    }
 
     if (typeMode) {
       typeAnswerInput.focus();
@@ -236,7 +253,7 @@ function initFlagsQuiz() {
     setAnswerInputsEnabled(!quizFlag.classList.contains("is-loading"));
   });
 
-  typeForm.addEventListener("submit", (event) => {
+  typePanel.addEventListener("submit", (event) => {
     event.preventDefault();
 
     if (!isTypeMode() || !currentQuizFlag || typeAnswerInput.disabled) {

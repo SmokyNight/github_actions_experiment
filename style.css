@@ -211,7 +211,12 @@ button:hover {
   cursor: pointer;
 }
 
-.flags-quiz-type-form {
+.flags-quiz-card[data-mode="choice"] .flags-quiz-type-panel,
+.flags-quiz-card[data-mode="type"] .flags-quiz-choice-panel {
+  display: none !important;
+}
+
+.flags-quiz-type-panel {
   display: flex;
   margin: 0;
 }
