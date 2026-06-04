@@ -193,6 +193,49 @@ button:hover {
   color: #b02a37;
 }
 
+.flags-quiz-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: #3457d5;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.flags-quiz-mode-toggle input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #3457d5;
+  cursor: pointer;
+}
+
+.flags-quiz-type-form {
+  display: flex;
+  margin: 0;
+}
+
+.flags-quiz-answer {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #3457d5;
+  border-radius: 8px;
+  color: #1f2a44;
+  background-color: #ffffff;
+  font: inherit;
+}
+
+.flags-quiz-answer:focus {
+  outline: 3px solid #ffcf33;
+  outline-offset: 2px;
+}
+
+.flags-quiz-answer:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
 .calculator-card {
   display: inline-flex;
   flex-direction: column;

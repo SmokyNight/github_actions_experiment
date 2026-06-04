@@ -1,13 +1,28 @@
 function initFlagsQuiz() {
   const flagsPage = document.getElementById("flags-quiz-page");
   const quizFlag = document.getElementById("quiz-flag");
-  const quizOptions = flagsPage
-    ? Array.from(flagsPage.querySelectorAll(".quiz-option"))
+  const quizOptionsContainer = document.getElementById("flags-quiz-options");
+  const quizOptions = quizOptionsContainer
+    ? Array.from(quizOptionsContainer.querySelectorAll(".quiz-option"))
     : [];
   const quizStreak = document.getElementById("flags-quiz-streak");
   const quizResult = document.getElementById("flags-quiz-result");
+  const quizQuestion = document.getElementById("flags-quiz-question");
+  const typeModeToggle = document.getElementById("flags-quiz-type-mode");
+  const typeForm = document.getElementById("flags-quiz-type-form");
+  const typeAnswerInput = document.getElementById("flags-quiz-answer");
 
-  if (!flagsPage || !quizFlag || !quizOptions.length || !quizStreak || !quizResult) {
+  if (
+    !flagsPage ||
+    !quizFlag ||
+    !quizOptions.length ||
+    !quizStreak ||
+    !quizResult ||
+    !quizQuestion ||
+    !typeModeToggle ||
+    !typeForm ||
+    !typeAnswerInput
+  ) {
     return;
   }
 
@@ -15,6 +30,7 @@ function initFlagsQuiz() {
   let quizRerollTimer = null;
   let quizQuestionId = 0;
   let correctAnswersInRow = 0;
+  let quizMode = "choice";
 
   function getRandomItem(items) {
     return items[Math.floor(Math.random() * items.length)];
@@ -46,20 +62,90 @@ function initFlagsQuiz() {
     return nextFlag;
   }
 
+  function normalizeCountryName(value) {
+    return String(value)
+      .trim()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  }
+
+  function isTypeMode() {
+    return quizMode === "type";
+  }
+
   function setQuizOptionsEnabled(enabled) {
     quizOptions.forEach((option) => {
       option.disabled = !enabled;
     });
   }
 
+  function setTypeAnswerEnabled(enabled) {
+    typeAnswerInput.disabled = !enabled;
+  }
+
+  function setAnswerInputsEnabled(enabled) {
+    if (isTypeMode()) {
+      setQuizOptionsEnabled(false);
+      setTypeAnswerEnabled(enabled);
+    } else {
+      setTypeAnswerEnabled(false);
+      setQuizOptionsEnabled(enabled);
+    }
+  }
+
+  function updateQuizModeUi() {
+    const typeMode = isTypeMode();
+
+    typeModeToggle.checked = typeMode;
+    quizOptionsContainer.hidden = typeMode;
+    typeForm.hidden = !typeMode;
+    quizQuestion.textContent = typeMode
+      ? "Type the country name and press Enter."
+      : "Which country does this flag belong to?";
+
+    quizResult.className = "quiz-result";
+    quizResult.textContent = "";
+    typeAnswerInput.value = "";
+    quizOptions.forEach((option) => {
+      option.classList.remove("selected");
+    });
+
+    if (typeMode) {
+      typeAnswerInput.focus();
+    }
+  }
+
   function updateQuizStreak() {
     quizStreak.textContent = `Correct answers in a row: ${correctAnswersInRow}`;
+  }
+
+  function processAnswer(isCorrect) {
+    if (isCorrect) {
+      correctAnswersInRow += 1;
+    } else {
+      correctAnswersInRow = 0;
+    }
+
+    updateQuizStreak();
+
+    quizResult.className = `quiz-result ${isCorrect ? "success" : "error"}`;
+    quizResult.textContent = isCorrect
+      ? `Correct! Streak: ${correctAnswersInRow}.`
+      : isTypeMode()
+        ? "Not quite. Try again."
+        : "Not quite. Try another option.";
+
+    if (isCorrect) {
+      setAnswerInputsEnabled(false);
+      quizRerollTimer = setTimeout(renderQuizQuestion, 1200);
+    }
   }
 
   function loadQuizFlagImage(flag, questionId) {
     quizFlag.classList.add("is-loading");
     quizFlag.alt = "Loading flag...";
-    setQuizOptionsEnabled(false);
+    setAnswerInputsEnabled(false);
 
     const loader = new Image();
 
@@ -69,7 +155,11 @@ function initFlagsQuiz() {
       quizFlag.src = loader.src;
       quizFlag.classList.remove("is-loading");
       quizFlag.alt = `Flag of ${flag.title}`;
-      setQuizOptionsEnabled(true);
+      setAnswerInputsEnabled(true);
+
+      if (isTypeMode()) {
+        typeAnswerInput.focus();
+      }
     }
 
     function showLoadError() {
@@ -78,7 +168,11 @@ function initFlagsQuiz() {
       quizFlag.removeAttribute("src");
       quizFlag.classList.remove("is-loading");
       quizFlag.alt = "Could not load flag";
-      setQuizOptionsEnabled(true);
+      setAnswerInputsEnabled(true);
+
+      if (isTypeMode()) {
+        typeAnswerInput.focus();
+      }
     }
 
     loader.onload = showLoadedImage;
@@ -115,6 +209,7 @@ function initFlagsQuiz() {
       option.classList.remove("selected");
     });
 
+    typeAnswerInput.value = "";
     quizResult.className = "quiz-result";
     quizResult.textContent = "";
 
@@ -123,35 +218,43 @@ function initFlagsQuiz() {
 
   quizOptions.forEach((option) => {
     option.addEventListener("click", () => {
+      if (isTypeMode()) return;
+
       const isCorrect = option.dataset.correct === "true";
 
       quizOptions.forEach((quizOption) => {
         quizOption.classList.toggle("selected", quizOption === option);
       });
 
-      if (isCorrect) {
-        correctAnswersInRow += 1;
-      } else {
-        correctAnswersInRow = 0;
-      }
-
-      updateQuizStreak();
-
-      quizResult.className = `quiz-result ${isCorrect ? "success" : "error"}`;
-      quizResult.textContent = isCorrect
-        ? `Correct! Streak: ${correctAnswersInRow}.`
-        : "Not quite. Try another option.";
-
-      if (isCorrect) {
-        quizOptions.forEach((quizOption) => {
-          quizOption.disabled = true;
-        });
-
-        quizRerollTimer = setTimeout(renderQuizQuestion, 1200);
-      }
+      processAnswer(isCorrect);
     });
   });
 
+  typeModeToggle.addEventListener("change", () => {
+    quizMode = typeModeToggle.checked ? "type" : "choice";
+    updateQuizModeUi();
+    setAnswerInputsEnabled(!quizFlag.classList.contains("is-loading"));
+  });
+
+  typeForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!isTypeMode() || !currentQuizFlag || typeAnswerInput.disabled) {
+      return;
+    }
+
+    const guess = normalizeCountryName(typeAnswerInput.value);
+    if (!guess) {
+      return;
+    }
+
+    const isCorrect =
+      guess === normalizeCountryName(currentQuizFlag.title);
+
+    processAnswer(isCorrect);
+  });
+
   updateQuizStreak();
+  updateQuizModeUi();
   renderQuizQuestion();
 }
