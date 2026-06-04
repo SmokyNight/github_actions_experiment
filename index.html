@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <link rel="stylesheet" href="style.css?v=10" />
+    <link rel="stylesheet" href="style.css?v=11" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   </head>
   <body>
@@ -148,12 +148,12 @@
 
     <section id="flags-quiz-page" class="page" hidden>
       <h1>Country flags mini-quiz</h1>
-      <div class="quiz-card">
+      <div id="flags-quiz-card" class="quiz-card" data-mode="choice">
         <label class="flags-quiz-mode-toggle">
           <input
             type="checkbox"
             id="flags-quiz-type-mode"
-            aria-controls="flags-quiz-options flags-quiz-type-form"
+            aria-controls="flags-quiz-choice-panel flags-quiz-type-panel"
           />
           Type country name (press Enter)
         </label>
@@ -169,19 +169,20 @@
           Correct answers in a row: 0
         </p>
         <div
-          id="flags-quiz-options"
-          class="quiz-options"
+          id="flags-quiz-choice-panel"
+          class="flags-quiz-choice-panel"
           aria-label="Country answer options"
         >
-          <button type="button" class="quiz-option"></button>
-          <button type="button" class="quiz-option"></button>
-          <button type="button" class="quiz-option"></button>
-          <button type="button" class="quiz-option"></button>
+          <div id="flags-quiz-options" class="quiz-options">
+            <button type="button" class="quiz-option"></button>
+            <button type="button" class="quiz-option"></button>
+            <button type="button" class="quiz-option"></button>
+            <button type="button" class="quiz-option"></button>
+          </div>
         </div>
         <form
-          id="flags-quiz-type-form"
-          class="flags-quiz-type-form"
-          hidden
+          id="flags-quiz-type-panel"
+          class="flags-quiz-type-panel"
           aria-label="Type country name answer"
         >
           <input
@@ -536,7 +537,7 @@
     <script src="quiz-paintings.js?v=2"></script>
     <script src="quiz.js?v=3"></script>
     <script src="quiz-flags.js?v=1"></script>
-    <script src="flags-quiz.js?v=2"></script>
+    <script src="flags-quiz.js?v=3"></script>
     <script>
       initPaintingQuiz();
       initFlagsQuiz();
