@@ -54,6 +54,14 @@
       <button
         type="button"
         class="nav-button"
+        data-page="flags-quiz"
+        aria-pressed="false"
+      >
+        Flag Quiz
+      </button>
+      <button
+        type="button"
+        class="nav-button"
         data-page="calculator"
         aria-pressed="false"
       >
@@ -135,6 +143,28 @@
           <button type="button" class="calculator-key calculator-key-zero" data-action="digit" data-value="0">0</button>
           <button type="button" class="calculator-key" data-action="decimal">.</button>
         </div>
+      </div>
+    </section>
+
+    <section id="flags-quiz-page" class="page" hidden>
+      <h1>Country flags mini-quiz</h1>
+      <div class="quiz-card">
+        <img
+          alt="Country flag quiz"
+          id="quiz-flag"
+          class="quiz-painting is-loading"
+        />
+        <p class="quiz-question">Which country does this flag belong to?</p>
+        <p id="flags-quiz-streak" class="quiz-streak" aria-live="polite">
+          Correct answers in a row: 0
+        </p>
+        <div class="quiz-options" aria-label="Country answer options">
+          <button type="button" class="quiz-option"></button>
+          <button type="button" class="quiz-option"></button>
+          <button type="button" class="quiz-option"></button>
+          <button type="button" class="quiz-option"></button>
+        </div>
+        <p id="flags-quiz-result" class="quiz-result" aria-live="polite"></p>
       </div>
     </section>
 
@@ -474,9 +504,12 @@
       });
     </script>
     <script src="quiz-paintings.js?v=2"></script>
-    <script src="quiz.js?v=2"></script>
+    <script src="quiz.js?v=3"></script>
+    <script src="quiz-flags.js?v=1"></script>
+    <script src="flags-quiz.js?v=1"></script>
     <script>
       initPaintingQuiz();
+      initFlagsQuiz();
     </script>
   </body>
 </html>
