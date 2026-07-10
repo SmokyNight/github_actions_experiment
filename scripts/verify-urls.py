@@ -5,6 +5,8 @@ import argparse
 import concurrent.futures
 import json
 import re
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -51,15 +53,22 @@ def check_url(url):
         method="HEAD",
         headers={"User-Agent": "github_actions_experiment/1.0 (quiz validator)"},
     )
-    try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            content_type = response.headers.get_content_type()
-            if response.status != 200:
-                return f"HTTP {response.status}: {url}"
-            if not content_type.startswith("image/"):
-                return f"unexpected content type {content_type}: {url}"
-    except Exception as error:
-        return f"{error}: {url}"
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                content_type = response.headers.get_content_type()
+                if response.status != 200:
+                    return f"HTTP {response.status}: {url}"
+                if not content_type.startswith("image/"):
+                    return f"unexpected content type {content_type}: {url}"
+                return None
+        except urllib.error.HTTPError as error:
+            if error.code in (429, 503) and attempt < 3:
+                time.sleep(2 ** attempt)
+                continue
+            return f"{error}: {url}"
+        except Exception as error:
+            return f"{error}: {url}"
     return None
 
 
