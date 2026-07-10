@@ -1,7 +1,7 @@
 const QUIZ_FLAGS = [
   {
     title: "Afghanistan",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_the_Taliban.svg/320px-Flag_of_the_Taliban.svg.png",
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg",
   },
   {
     title: "Albania",

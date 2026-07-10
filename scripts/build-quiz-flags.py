@@ -15,10 +15,7 @@ TITLE_OVERRIDES = {
     "va": "Vatican City",
 }
 IMAGE_OVERRIDES = {
-    "af": (
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/"
-        "Flag_of_the_Taliban.svg/320px-Flag_of_the_Taliban.svg.png"
-    ),
+    "af": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg",
 }
 
 
