@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build quiz-flags.js from REST Countries (independent states + Palestine)."""
+"""Build quiz-flags.js from FlagCDN's countries and territories catalog."""
 import json
 import urllib.request
 from pathlib import Path
@@ -7,29 +7,43 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "quiz-flags.js"
 UA = "github_actions_experiment/1.0"
-API = "https://restcountries.com/v3.1/independent?fields=name,flags"
+CATALOG_URL = "https://flagcdn.com/en/codes.json"
+EXCLUDED_CODES = {"eu", "un"}
+TITLE_OVERRIDES = {
+    "ci": "Ivory Coast",
+    "sz": "Eswatini",
+    "va": "Vatican City",
+}
+IMAGE_OVERRIDES = {
+    "af": (
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/"
+        "Flag_of_the_Taliban.svg/320px-Flag_of_the_Taliban.svg.png"
+    ),
+}
 
 
 def fetch_countries():
-    req = urllib.request.Request(API, headers={"User-Agent": UA})
+    req = urllib.request.Request(CATALOG_URL, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=120) as resp:
-        countries = json.loads(resp.read().decode())
+        countries = json.loads(resp.read().decode("utf-8"))
 
-    by_name = {
-        entry["name"]["common"]: entry["flags"]["png"] for entry in countries
-    }
+    flags = []
+    for code, catalog_title in countries.items():
+        if len(code) != 2 or code in EXCLUDED_CODES:
+            continue
 
-    if "Palestine" not in by_name:
-        palestine_url = (
-            "https://restcountries.com/v3.1/name/palestine?fields=name,flags"
+        flags.append(
+            {
+                "title": TITLE_OVERRIDES.get(code, catalog_title),
+                "image": IMAGE_OVERRIDES.get(
+                    code,
+                    f"https://flagcdn.com/w320/{code}.png",
+                ),
+            }
         )
-        req = urllib.request.Request(palestine_url, headers={"User-Agent": UA})
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            palestine = json.loads(resp.read().decode())[0]
-        by_name[palestine["name"]["common"]] = palestine["flags"]["png"]
 
     return sorted(
-        ({"title": name, "image": image} for name, image in by_name.items()),
+        flags,
         key=lambda item: item["title"].casefold(),
     )
 
@@ -49,7 +63,7 @@ def write_js(flags):
 def main():
     flags = fetch_countries()
     write_js(flags)
-    print(f"wrote {len(flags)} countries to {OUT}")
+    print(f"wrote {len(flags)} countries and territories to {OUT}")
 
 
 if __name__ == "__main__":

@@ -12,12 +12,24 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/dz.png",
   },
   {
+    title: "American Samoa",
+    image: "https://flagcdn.com/w320/as.png",
+  },
+  {
     title: "Andorra",
     image: "https://flagcdn.com/w320/ad.png",
   },
   {
     title: "Angola",
     image: "https://flagcdn.com/w320/ao.png",
+  },
+  {
+    title: "Anguilla",
+    image: "https://flagcdn.com/w320/ai.png",
+  },
+  {
+    title: "Antarctica",
+    image: "https://flagcdn.com/w320/aq.png",
   },
   {
     title: "Antigua and Barbuda",
@@ -30,6 +42,10 @@ const QUIZ_FLAGS = [
   {
     title: "Armenia",
     image: "https://flagcdn.com/w320/am.png",
+  },
+  {
+    title: "Aruba",
+    image: "https://flagcdn.com/w320/aw.png",
   },
   {
     title: "Australia",
@@ -76,6 +92,10 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/bj.png",
   },
   {
+    title: "Bermuda",
+    image: "https://flagcdn.com/w320/bm.png",
+  },
+  {
     title: "Bhutan",
     image: "https://flagcdn.com/w320/bt.png",
   },
@@ -92,8 +112,20 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/bw.png",
   },
   {
+    title: "Bouvet Island",
+    image: "https://flagcdn.com/w320/bv.png",
+  },
+  {
     title: "Brazil",
     image: "https://flagcdn.com/w320/br.png",
+  },
+  {
+    title: "British Indian Ocean Territory",
+    image: "https://flagcdn.com/w320/io.png",
+  },
+  {
+    title: "British Virgin Islands",
+    image: "https://flagcdn.com/w320/vg.png",
   },
   {
     title: "Brunei",
@@ -128,6 +160,14 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/cv.png",
   },
   {
+    title: "Caribbean Netherlands",
+    image: "https://flagcdn.com/w320/bq.png",
+  },
+  {
+    title: "Cayman Islands",
+    image: "https://flagcdn.com/w320/ky.png",
+  },
+  {
     title: "Central African Republic",
     image: "https://flagcdn.com/w320/cf.png",
   },
@@ -144,12 +184,24 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/cn.png",
   },
   {
+    title: "Christmas Island",
+    image: "https://flagcdn.com/w320/cx.png",
+  },
+  {
+    title: "Cocos (Keeling) Islands",
+    image: "https://flagcdn.com/w320/cc.png",
+  },
+  {
     title: "Colombia",
     image: "https://flagcdn.com/w320/co.png",
   },
   {
     title: "Comoros",
     image: "https://flagcdn.com/w320/km.png",
+  },
+  {
+    title: "Cook Islands",
+    image: "https://flagcdn.com/w320/ck.png",
   },
   {
     title: "Costa Rica",
@@ -162,6 +214,10 @@ const QUIZ_FLAGS = [
   {
     title: "Cuba",
     image: "https://flagcdn.com/w320/cu.png",
+  },
+  {
+    title: "Cura\u00e7ao",
+    image: "https://flagcdn.com/w320/cw.png",
   },
   {
     title: "Cyprus",
@@ -224,6 +280,14 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/et.png",
   },
   {
+    title: "Falkland Islands",
+    image: "https://flagcdn.com/w320/fk.png",
+  },
+  {
+    title: "Faroe Islands",
+    image: "https://flagcdn.com/w320/fo.png",
+  },
+  {
     title: "Fiji",
     image: "https://flagcdn.com/w320/fj.png",
   },
@@ -234,6 +298,18 @@ const QUIZ_FLAGS = [
   {
     title: "France",
     image: "https://flagcdn.com/w320/fr.png",
+  },
+  {
+    title: "French Guiana",
+    image: "https://flagcdn.com/w320/gf.png",
+  },
+  {
+    title: "French Polynesia",
+    image: "https://flagcdn.com/w320/pf.png",
+  },
+  {
+    title: "French Southern and Antarctic Lands",
+    image: "https://flagcdn.com/w320/tf.png",
   },
   {
     title: "Gabon",
@@ -256,16 +332,36 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/gh.png",
   },
   {
+    title: "Gibraltar",
+    image: "https://flagcdn.com/w320/gi.png",
+  },
+  {
     title: "Greece",
     image: "https://flagcdn.com/w320/gr.png",
+  },
+  {
+    title: "Greenland",
+    image: "https://flagcdn.com/w320/gl.png",
   },
   {
     title: "Grenada",
     image: "https://flagcdn.com/w320/gd.png",
   },
   {
+    title: "Guadeloupe",
+    image: "https://flagcdn.com/w320/gp.png",
+  },
+  {
+    title: "Guam",
+    image: "https://flagcdn.com/w320/gu.png",
+  },
+  {
     title: "Guatemala",
     image: "https://flagcdn.com/w320/gt.png",
+  },
+  {
+    title: "Guernsey",
+    image: "https://flagcdn.com/w320/gg.png",
   },
   {
     title: "Guinea",
@@ -284,8 +380,16 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/ht.png",
   },
   {
+    title: "Heard Island and McDonald Islands",
+    image: "https://flagcdn.com/w320/hm.png",
+  },
+  {
     title: "Honduras",
     image: "https://flagcdn.com/w320/hn.png",
+  },
+  {
+    title: "Hong Kong",
+    image: "https://flagcdn.com/w320/hk.png",
   },
   {
     title: "Hungary",
@@ -316,6 +420,10 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/ie.png",
   },
   {
+    title: "Isle of Man",
+    image: "https://flagcdn.com/w320/im.png",
+  },
+  {
     title: "Israel",
     image: "https://flagcdn.com/w320/il.png",
   },
@@ -334,6 +442,10 @@ const QUIZ_FLAGS = [
   {
     title: "Japan",
     image: "https://flagcdn.com/w320/jp.png",
+  },
+  {
+    title: "Jersey",
+    image: "https://flagcdn.com/w320/je.png",
   },
   {
     title: "Jordan",
@@ -400,6 +512,10 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/lu.png",
   },
   {
+    title: "Macau",
+    image: "https://flagcdn.com/w320/mo.png",
+  },
+  {
     title: "Madagascar",
     image: "https://flagcdn.com/w320/mg.png",
   },
@@ -428,12 +544,20 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/mh.png",
   },
   {
+    title: "Martinique",
+    image: "https://flagcdn.com/w320/mq.png",
+  },
+  {
     title: "Mauritania",
     image: "https://flagcdn.com/w320/mr.png",
   },
   {
     title: "Mauritius",
     image: "https://flagcdn.com/w320/mu.png",
+  },
+  {
+    title: "Mayotte",
+    image: "https://flagcdn.com/w320/yt.png",
   },
   {
     title: "Mexico",
@@ -458,6 +582,10 @@ const QUIZ_FLAGS = [
   {
     title: "Montenegro",
     image: "https://flagcdn.com/w320/me.png",
+  },
+  {
+    title: "Montserrat",
+    image: "https://flagcdn.com/w320/ms.png",
   },
   {
     title: "Morocco",
@@ -488,6 +616,10 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/nl.png",
   },
   {
+    title: "New Caledonia",
+    image: "https://flagcdn.com/w320/nc.png",
+  },
+  {
     title: "New Zealand",
     image: "https://flagcdn.com/w320/nz.png",
   },
@@ -504,12 +636,24 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/ng.png",
   },
   {
+    title: "Niue",
+    image: "https://flagcdn.com/w320/nu.png",
+  },
+  {
+    title: "Norfolk Island",
+    image: "https://flagcdn.com/w320/nf.png",
+  },
+  {
     title: "North Korea",
     image: "https://flagcdn.com/w320/kp.png",
   },
   {
     title: "North Macedonia",
     image: "https://flagcdn.com/w320/mk.png",
+  },
+  {
+    title: "Northern Mariana Islands",
+    image: "https://flagcdn.com/w320/mp.png",
   },
   {
     title: "Norway",
@@ -552,12 +696,20 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/ph.png",
   },
   {
+    title: "Pitcairn Islands",
+    image: "https://flagcdn.com/w320/pn.png",
+  },
+  {
     title: "Poland",
     image: "https://flagcdn.com/w320/pl.png",
   },
   {
     title: "Portugal",
     image: "https://flagcdn.com/w320/pt.png",
+  },
+  {
+    title: "Puerto Rico",
+    image: "https://flagcdn.com/w320/pr.png",
   },
   {
     title: "Qatar",
@@ -580,12 +732,32 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/rw.png",
   },
   {
+    title: "R\u00e9union",
+    image: "https://flagcdn.com/w320/re.png",
+  },
+  {
+    title: "Saint Barth\u00e9lemy",
+    image: "https://flagcdn.com/w320/bl.png",
+  },
+  {
+    title: "Saint Helena, Ascension and Tristan da Cunha",
+    image: "https://flagcdn.com/w320/sh.png",
+  },
+  {
     title: "Saint Kitts and Nevis",
     image: "https://flagcdn.com/w320/kn.png",
   },
   {
     title: "Saint Lucia",
     image: "https://flagcdn.com/w320/lc.png",
+  },
+  {
+    title: "Saint Martin",
+    image: "https://flagcdn.com/w320/mf.png",
+  },
+  {
+    title: "Saint Pierre and Miquelon",
+    image: "https://flagcdn.com/w320/pm.png",
   },
   {
     title: "Saint Vincent and the Grenadines",
@@ -624,6 +796,10 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/sg.png",
   },
   {
+    title: "Sint Maarten",
+    image: "https://flagcdn.com/w320/sx.png",
+  },
+  {
     title: "Slovakia",
     image: "https://flagcdn.com/w320/sk.png",
   },
@@ -642,6 +818,10 @@ const QUIZ_FLAGS = [
   {
     title: "South Africa",
     image: "https://flagcdn.com/w320/za.png",
+  },
+  {
+    title: "South Georgia",
+    image: "https://flagcdn.com/w320/gs.png",
   },
   {
     title: "South Korea",
@@ -668,6 +848,10 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/sr.png",
   },
   {
+    title: "Svalbard and Jan Mayen",
+    image: "https://flagcdn.com/w320/sj.png",
+  },
+  {
     title: "Sweden",
     image: "https://flagcdn.com/w320/se.png",
   },
@@ -682,6 +866,10 @@ const QUIZ_FLAGS = [
   {
     title: "S\u00e3o Tom\u00e9 and Pr\u00edncipe",
     image: "https://flagcdn.com/w320/st.png",
+  },
+  {
+    title: "Taiwan",
+    image: "https://flagcdn.com/w320/tw.png",
   },
   {
     title: "Tajikistan",
@@ -704,6 +892,10 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/tg.png",
   },
   {
+    title: "Tokelau",
+    image: "https://flagcdn.com/w320/tk.png",
+  },
+  {
     title: "Tonga",
     image: "https://flagcdn.com/w320/to.png",
   },
@@ -722,6 +914,10 @@ const QUIZ_FLAGS = [
   {
     title: "Turkmenistan",
     image: "https://flagcdn.com/w320/tm.png",
+  },
+  {
+    title: "Turks and Caicos Islands",
+    image: "https://flagcdn.com/w320/tc.png",
   },
   {
     title: "Tuvalu",
@@ -748,6 +944,14 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/us.png",
   },
   {
+    title: "United States Minor Outlying Islands",
+    image: "https://flagcdn.com/w320/um.png",
+  },
+  {
+    title: "United States Virgin Islands",
+    image: "https://flagcdn.com/w320/vi.png",
+  },
+  {
     title: "Uruguay",
     image: "https://flagcdn.com/w320/uy.png",
   },
@@ -772,6 +976,14 @@ const QUIZ_FLAGS = [
     image: "https://flagcdn.com/w320/vn.png",
   },
   {
+    title: "Wallis and Futuna",
+    image: "https://flagcdn.com/w320/wf.png",
+  },
+  {
+    title: "Western Sahara",
+    image: "https://flagcdn.com/w320/eh.png",
+  },
+  {
     title: "Yemen",
     image: "https://flagcdn.com/w320/ye.png",
   },
@@ -782,5 +994,9 @@ const QUIZ_FLAGS = [
   {
     title: "Zimbabwe",
     image: "https://flagcdn.com/w320/zw.png",
+  },
+  {
+    title: "\u00c5land Islands",
+    image: "https://flagcdn.com/w320/ax.png",
   },
 ];
