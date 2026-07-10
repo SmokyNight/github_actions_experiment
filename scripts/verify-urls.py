@@ -13,6 +13,11 @@ from pathlib import Path
 DATASET = Path(__file__).resolve().parent.parent / "quiz-paintings.js"
 MINIMUM_PAINTINGS = 1_000
 SAMPLE_SIZE = 50
+MAX_WORKERS = 4
+USER_AGENT = (
+    "github_actions_experiment/1.0 "
+    "(https://github.com/SmokyNight/github_actions_experiment)"
+)
 ENTRY_PATTERN = re.compile(
     r"\{\s*title:\s*(\"(?:\\.|[^\"\\])*\")"
     r",\s*image:\s*(\"(?:\\.|[^\"\\])*\")\s*,?\s*\}",
@@ -51,7 +56,7 @@ def check_url(url):
     request = urllib.request.Request(
         url,
         method="HEAD",
-        headers={"User-Agent": "github_actions_experiment/1.0 (quiz validator)"},
+        headers={"User-Agent": USER_AGENT},
     )
     for attempt in range(4):
         try:
@@ -94,7 +99,7 @@ def main():
     validate_dataset(entries)
     urls = select_urls(entries, args.all)
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=12) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         failures = [failure for failure in pool.map(check_url, urls) if failure]
 
     print(
